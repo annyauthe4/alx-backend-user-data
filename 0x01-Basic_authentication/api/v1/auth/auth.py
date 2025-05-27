@@ -6,8 +6,6 @@ from typing import List, TypeVar
 
 class Auth:
     """Class definition for api authentication."""
-    def __init__(self):
-        """Initialization of class object"""
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """Method that handles api path"""
