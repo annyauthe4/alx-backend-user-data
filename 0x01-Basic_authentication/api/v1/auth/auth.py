@@ -1,5 +1,6 @@
 #!/usr/bin/env pyhon3
 """This module manages api authentication."""
+import re
 from flask import request
 from typing import List, TypeVar
 
@@ -17,17 +18,18 @@ class Auth:
           - False if path matches (with or without trailing slash) any in
           excluded_paths
         """
-        if path is None:
-            return True
-        if excluded_paths is None or not excluded_paths:
-            return True
-
-        # Ensure trailing slash for comparison
-        normalized_path = path if path.endswith('/') else path + '/'
-
-        for excluded in excluded_paths:
-            if excluded == normalized_path:
-                return False
+        if path is not None and excluded_paths is not None:
+            for excluded_path in map(lambda x: x.strip(), excluded_paths):
+                pattern = ''
+                if excluded_path[-1] == '*':
+                    pattern = f"{excluded_path[0:-1]}.*"
+                elif excluded_path[-1] == '/':
+                    pattern = f"{excluded_path[0:-1]}/*"
+                else:
+                    pattern = f"{excluded_path}/*"
+                # Use Regular Expression to match pattern
+                if re.match(pattern, path):
+                    return False
         return True
 
     def authorization_header(self, request=None) -> str:
@@ -37,5 +39,5 @@ class Auth:
         return request.headers.get('Authorization', None)
 
     def current_user(self, request=None) -> TypeVar('User'):
-        """Checks current user"""
-        return request
+        """Gets the current user from request"""
+        return None
