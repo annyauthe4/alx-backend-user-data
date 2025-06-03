@@ -30,7 +30,7 @@ class Auth:
                 # Use Regular Expression to match pattern
                 if re.match(pattern, path):
                     return False
-        return True
+        return False
 
     def authorization_header(self, request=None) -> str:
         """Handles authorized request header"""
