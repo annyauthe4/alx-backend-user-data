@@ -5,6 +5,8 @@ from api.v1.auth.auth import Auth
 import base64
 import binascii
 from flask import request
+from models.user import User
+from typing import TypeVar
 
 
 class BasicAuth(Auth):
@@ -69,3 +71,39 @@ class BasicAuth(Auth):
             return None, None
         email, username = d_b_auth_h.strip().split(':', 1)
         return email, username
+
+    def user_object_from_credentials(
+        self, user_email: str, user_pwd: str
+    ) -> TypeVar('User'):
+        """
+        Returns the instance of User.
+
+        Args:
+            user_email (str): The email of the user.
+            user_pwd (str): The user password.
+
+        Returns:
+            obj: The instance of the user.
+        """
+        if user_email is None or not isinstance(user_email, str):
+            return None
+
+        if user_pwd is None or not isinstance(user_pwd, str):
+            return None
+
+        # Check user in database using email and password
+        try:
+            users = User.search({"email": user_email})
+        except Exception:
+            return None
+
+        # Validate users returned
+        if not users or len(users) == 0:
+            return None
+
+        # Use the first instance of users returned
+        user = users[0]
+        # Check password
+        if not user.is_valid_password(user_pwd):
+            return None
+        return user
