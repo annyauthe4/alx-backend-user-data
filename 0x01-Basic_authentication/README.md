@@ -23,3 +23,6 @@ In the industry, you should not implement your own Basic authentication system a
 </code>
 
 ## Decode to string
+
+## To run file on server
+<code>API_HOST=0.0.0.0 API_PORT=5000 ./main_5.py</code>
