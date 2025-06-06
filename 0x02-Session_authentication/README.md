@@ -12,3 +12,17 @@ returning a token in the form of a cookie to the client after the first authoriz
    <li>Server validates it against the session store & grants access</li>
    <li>When user logs out, server destroys the session & clears the cookie</li>
 </ul>
+
+<h1>Running the server on local terminal </h1>
+In the first terminal:
+    Create a new user with the necessary credentials in a main file
+    Run: <code>API_HOST=0.0.0.0 API_PORT=5000 AUTH_TYPE=basic_auth ./main_0.py </code>
+    Then run the server using:
+      <code>API_HOST=0.0.0.0 API_PORT=5000 AUTH_TYPE=basic_auth python3 -m api.v1.app</code>
+
+In the second terminal:
+Test different endpoint:
+    <code>curl "http://0.0.0.0:5000/api/v1/status"</code>
+    <code>curl "http://0.0.0.0:5000/api/v1/users"</code>
+    <code>curl "http://0.0.0.0:5000/api/v1/users" -H "Authorization: Basic Ym9iQGhidG4uaW86SDBsYmVydG9uU2Nob29sOTgh"</code>
+    <code>curl "http://0.0.0.0:5000/api/v1/users/me" -H "Authorization: Basic Ym9iQGhidG4uaW86SDBsYmVydG9uU2Nob29sOTgh"</code>
