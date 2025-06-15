@@ -162,6 +162,7 @@ class Auth:
         """
         try:
             user = self._db.find_user_by(reset_token=reset_token)
+
         except Exception:
             raise ValueError("Invalid reset token")
 
