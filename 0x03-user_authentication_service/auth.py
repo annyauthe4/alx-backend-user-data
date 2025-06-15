@@ -162,10 +162,13 @@ class Auth:
         """
         try:
             user = self._db.find_user_by(reset_token=reset_token)
-        Exception:
+        except Exception:
             raise ValueError("Invalid reset token")
 
+        # Hash the new password
         hash_pwd = self._hash_password(password)
+
+        # Update the user's password and clear reset_token
         self._db.update_user(
             user.id,
             hashed_password=hash_pwd,
