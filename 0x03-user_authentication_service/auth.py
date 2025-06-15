@@ -166,4 +166,8 @@ class Auth:
             raise ValueError("Invalid reset token")
 
         hash_pwd = self._hash_password(password)
-        self._db.update_user(user.id, reset_token=None)
+        self._db.update_user(
+            user.id,
+            hashed_password=hash_pwd,
+            reset_token=None
+        )
