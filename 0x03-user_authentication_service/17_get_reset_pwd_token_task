@@ -1,0 +1,15 @@
+17. Get reset password token
+mandatory
+Score: 0.0% (Checks completed: 0.0%)
+In this task, you will implement a get_reset_password_token function to respond to the POST /reset_password route.
+
+The request is expected to contain form data with the "email" field.
+
+If the email is not registered, respond with a 403 status code. Otherwise, generate a token and respond with a 200 HTTP status and the following JSON payload:
+
+{"email": "<user email>", "reset_token": "<reset token>"}
+Repo:
+
+GitHub repository: alx-backend-user-data
+Directory: 0x03-user_authentication_service
+File: app.py
